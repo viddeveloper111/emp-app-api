@@ -14,8 +14,8 @@ exports.createLead = async (req, res) => {
 // Get all Leads
 exports.getLeads = async (req, res) => {
   try {
-    const status = req.params.status;
-    const leads = await Lead.find(status !== 'all' ? { status } : {});
+    const status = req.query.status;
+    const leads = await Lead.find(status ? { status } : {});
     res.json(leads);
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
