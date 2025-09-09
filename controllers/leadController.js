@@ -3,8 +3,8 @@ const Lead = require("../models/Lead");
 // Create a new Lead
 exports.createLead = async (req, res) => {
   try {
-    const { title, description, image } = req.body;
-    const lead = await Lead.create({ title, description, image });
+    const { title, description, image,status } = req.body;
+    const lead = await Lead.create({ title, description, image,status });
     res.status(201).json(lead);
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
@@ -14,7 +14,8 @@ exports.createLead = async (req, res) => {
 // Get all Leads
 exports.getLeads = async (req, res) => {
   try {
-    const leads = await Lead.find();
+    const status = req.params.status;
+    const leads = await Lead.find(status !== 'all' ? { status } : {});
     res.json(leads);
   } catch (err) {
     res.status(500).json({ msg: "Server error", error: err.message });
