@@ -25,6 +25,8 @@ exports.getLeads = async (req, res) => {
 // Get Lead by ID
 exports.getLeadById = async (req, res) => {
   try {
+    console.log(req.params.id);
+    
     const lead = await Lead.findById(req.params.id);
     if (!lead) return res.status(404).json({ msg: "Lead not found" });
     res.json(lead);
