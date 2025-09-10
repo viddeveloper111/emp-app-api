@@ -5,6 +5,7 @@ const {
   getLeadById,
   updateLead,
   deleteLead,
+  getLeadsByUserId,
 } = require("../controllers/leadController");
 
 const router = express.Router();
@@ -14,5 +15,7 @@ router.get("/getLeads", getLeads);
 router.get("/getLeadById/:id", getLeadById);
 router.put("/updateLead/:id", updateLead);
 router.delete("/deleteLead/:id", deleteLead);
+router.get("/user/:userId", getLeadsByUserId);
+
 
 module.exports = router;

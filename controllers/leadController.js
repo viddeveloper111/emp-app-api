@@ -58,3 +58,26 @@ exports.deleteLead = async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
+
+
+exports.getLeadsByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params; 
+
+    const leads = await Lead.find({ userId })
+      .populate("userId", "name email role") 
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      count: leads.length,
+      data: leads,
+    });
+  } catch (error) {
+    console.error("Error fetching leads:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
