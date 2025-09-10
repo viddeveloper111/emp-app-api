@@ -47,3 +47,28 @@ exports.login = async (req, res) => {
     res.status(500).json({ msg: "Server error", error: err.message });
   }
 };
+
+
+exports.getUsers = async (req, res) => {
+  try {
+    const { role } = req.query; // e.g. ?role=admin or ?role=sales
+
+    const filter = role ? { role } : {};
+
+    const users = await User.find(filter)
+      .select("_id name role") // only return _id, name, role
+      .lean();
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      data: users,
+    });
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
